@@ -20,7 +20,7 @@
 			"**/__pycache__": true,
 			"**/.mypy_cache": true,
 			"**/.pytest_cache": true,
-			"**/Project.egg-info": true,
+			"**/Final-Project---Brain-Cancer-Analysis.egg-info": true,
 			"**/.ruff_cache": true,
 			"mypy_cache": true,
 			"pytest_cache": true,

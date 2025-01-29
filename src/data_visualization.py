@@ -74,14 +74,14 @@ def user_interface():
 
         if allele_or_tumor in alleles: # If the user has inserted an allele to the program.
             analyze_allele_expression(allele_or_tumor)
-
+            
         elif allele_or_tumor in cancer_type: # If the user has inserted a type of cancer to the program.
             analyze_tumor(allele_or_tumor)
 
         elif allele_or_tumor == 'exit': # If the user wants to end the program. 
             os.system('cls') # Clears the terminal. 
-            sys.exit()  # Exit the program. *It was used instead of break since it breaks the whole program entierly, rather then a specific function.
-
+            sys.exit()  # Exit the program. 
+            
         else: # If the user types something unfamiliar to the program.
             print("\nInvalid choice. Please try again.") 
             user_interface() # Running the program again to give the user another chance to type something relevant. 
@@ -148,7 +148,7 @@ def analyze_tumor(tumor_type):
     Args: 
         tumor_type (str) - The name of the cancer the user has inserted to the program.
     """
-
+    
     os.system('cls') # Clears the terminal. 
     
     # Retrieve the allele expression data for the specified tumor type (typed by the user).
@@ -164,8 +164,6 @@ def analyze_tumor(tumor_type):
 
     # Get the top alleles with the largest expression differences.
     top_alleles = sorted(differences, key=differences.get, reverse=True)[:num_for_plot]
-
-
 
         # Create a bar plot comparing tumor vs normal expression levels for the top alleles.
 
@@ -198,8 +196,7 @@ def analyze_tumor(tumor_type):
         plt.xticks(range(len(labels)), labels, rotation=45) # Customize x-axis labels and rotating them 45 degrees.
         plt.title(f"Top {num_for_plot} Alleles with Most Difference in Expression for {tumor_type}")  
         plt.ylabel("Expression Level")  
-        plt.tight_layout() # Adjust layout to prevent overlap for aesthetic reasons.
-        
+        plt.tight_layout() # Adjust layout to prevent overlap for aesthetic reasons. 
 
        # Create a heatmap to visualize correlations among the top alleles in the tumor type.
 
@@ -216,6 +213,6 @@ def analyze_tumor(tumor_type):
          
     else:
         print(f'\nNot enough data in excel file to show correlation between alleles in {tumor_type}.')
-
+ 
     plt.show() 
-
+    

@@ -29,7 +29,7 @@ Folder Structure
 
 The project directory is structured as follows:
 
-Project/
+Final Project - Brain Cancer Analysis/
 │
 ├── main.py                      # Main entry point of the project.
 │                    
