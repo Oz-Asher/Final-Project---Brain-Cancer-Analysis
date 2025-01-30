@@ -5,12 +5,12 @@ import pandas as pd
 # Add the 'src' folder to the sys.path so Python can find the src package
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from data_visualization import data_visualization 
+from data_visualization import DataVisualization 
 
 
-def test_data_visualization():
+def test_DataVisualization():
 
-    print('\n\\\\\\\\\\\\\\\\\\ data_visualization() Test')
+    print('\n\\\\\\\\\\\\\\\\\\ DataVisualization() Test')
 
     # Example of df
     df = {
@@ -42,7 +42,7 @@ def test_data_visualization():
     
 
     # Ensure no errors during plotting
-    data_visualization(data, df, num_for_plot)
+    DataVisualization(data, df, num_for_plot)
 
 
-test_data_visualization()
+test_DataVisualization()

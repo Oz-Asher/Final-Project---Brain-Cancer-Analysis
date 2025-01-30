@@ -2,7 +2,7 @@
 
 from src.data_extraction import import_data, clean_data
 from src.print_data import print_data
-from src.data_visualization import data_visualization
+from src.data_visualization import DataVisualization
 
 
 def main():
@@ -35,7 +35,7 @@ def main():
     # print_data(data) # Optional. 
 
     # Visualising data of the excel using user interface. 
-    data_visualization(data, df, num_for_plot)
+    DataVisualization(data, df, num_for_plot)
 
 
 if __name__ == "__main__":
