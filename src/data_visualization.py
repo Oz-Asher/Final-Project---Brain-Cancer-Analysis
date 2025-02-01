@@ -40,10 +40,10 @@ class DataVisualization:
 
         # Contains the mean expression (in values) for each allele (in keys) in the healthy tissue.
         self.normal_means = df[df['type'] == 'normal'][self.alleles].mean().to_dict() # Converts the variable into a dict.
-        
+
         self.user_interface() # Run the interface with the user.
 
-   
+
     def user_interface(self):
         """
         Providing user interface for allele and tumor analysis.
@@ -58,10 +58,10 @@ class DataVisualization:
             print("\nTissues available:", ", ".join(self.cancer_type))
             random_alleles = random.sample(list(self.alleles), self.num_for_plot) # Randomly select num_for_plot alleles.
             print("Example of available genes:", ", ".join(random_alleles))
-            
+
             # Get user's choice for analysis.
             allele_or_tumor = input("\nEnter allele, tumor type, or 'exit' to quit: ").strip().lower()
-            
+
             if allele_or_tumor in self.alleles: # If the user has inserted an allele to the program.
                 self.analyze_allele_expression(allele_or_tumor)
 
@@ -75,7 +75,7 @@ class DataVisualization:
             else: # If the user types something unfamiliar to the program.
                 print("\nInvalid choice. Please try again.")
                 self.user_interface() # Running the program again to give the user another chance to type something relevant. 
-    
+
 
     # Reclled from user_interface() based on user's dicision.
     def analyze_allele_expression(self, allele):
@@ -111,19 +111,19 @@ class DataVisualization:
             # Calculate and print the difference in expression between the tumor and normal tissue.
             print(f"Tumor Type: {tumor_type}, Tumor Expression: {round(tumor_expression, 3)}, "
                   f"It is different than the healthy tissue by: {round((tumor_expression / self.normal_means[allele]) * 100 , 3)}%.")
-        
+
         # Describe the allele's data to get a statistical summary (mean, std, etc.).
         allele_data = self.df[allele]
         print(allele_data.describe())
-        
+
         # Plotting the distribution of allele expression.
         plt.figure(figsize=(10, 5))
         sns.histplot(allele_data, kde=True, color='blue') # Generate a histogram with a KDE curve.
-        plt.title(f"Distribution of Expression Levels for allele: {allele}")  
+        plt.title(f"Distribution of Expression Levels for allele: {allele}") 
         plt.xlabel("Expression Level")  
         plt.ylabel("Frequency")  
         plt.show()
-    
+
 
     # Reclled from user_interface() based on user's dicision.
     def analyze_tumor(self, tumor_type):
