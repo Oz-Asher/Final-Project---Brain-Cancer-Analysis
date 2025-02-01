@@ -22,8 +22,6 @@ authors = [
 [project.optional-dependencies]
 dev = [
     "tox",
-dev = [
-    "tox",
     "ipykernel",
     "Final-Project---Brain-Cancer-Analysis[ds]",
     "Final-Project---Brain-Cancer-Analysis[lint]",
@@ -31,7 +29,7 @@ dev = [
     "Final-Project---Brain-Cancer-Analysis[doc]",
     "Final-Project---Brain-Cancer-Analysis[build]",
 ]
-]
+
 lint = [
     "mypy",
     "ruff",
