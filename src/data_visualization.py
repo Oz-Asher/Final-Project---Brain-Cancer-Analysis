@@ -222,7 +222,7 @@ class DataVisualization:
                 print(f"\nMost significant alleles that are highly correlated in the formation of {tumor_type}:\n")
 
                 for allele in list_corr:
-                    print(f"{allele} - Changed expression from normal by: {round((tumor_allele_data[allele] / self.normal_means[allele])*100, 3)}%")
+                    print(f"{allele} - Changed expression from normal by {round((tumor_allele_data[allele] / self.normal_means[allele])*100, 3)}%")
             
             elif tumor_type == 'normal':
                 pass

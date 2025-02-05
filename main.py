@@ -20,7 +20,7 @@ def main():
     num_for_plot = 5 # Can only be a natural number.
 
     # Threshold for identifying significant correlations. 
-    corr_threshold = 0.7
+    corr_threshold = 0.7 # Can be somewhere between 0 and 1.
 
 
                     # Running The Code:
