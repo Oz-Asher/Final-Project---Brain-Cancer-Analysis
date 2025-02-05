@@ -11,7 +11,7 @@ class DataVisualization:
     in each brain tumor and plots it to the user. 
     """
     
-    def __init__(self, data, df, num_for_plot = 5):
+    def __init__(self, data, df, num_for_plot = 5, corr_threshold = 0.7):
         """
         Initializes the class and prepares data for visualization.
 
@@ -21,16 +21,28 @@ class DataVisualization:
 
            df (DataFrame)- Consists of the raw data of the file.
 
-           num_for_plot - The number of top alleles that we allow to be plotted for each tumor.
-                          Can only be a natural number. If no value is used then baseline is 5.
+           num_for_plot (int) - The number of top alleles that we allow to be plotted for each tumor.
+                                Can only be a natural number. If no value is used then baseline is 5.
+
+           corr_threshold (float) - Threshold for determining significant correlations. If no value is 
+                                    used then baseline value is 0.7.
         """
+
         self.data = data
         self.df = df
         self.num_for_plot = num_for_plot
+        self.corr_threshold = corr_threshold
         
+        # In case the programmer has inserted an invalid value for num_for_plot
         if type(self.num_for_plot) is not int or self.num_for_plot < 2:
             self.num_for_plot = 5
             print('\nInserted value of desired number of alleles to be plotted is invalid. Baseline value (5) was used instead.')
+
+
+        # In case the programmer has inserted an invalid value for corr_threshold
+        if type(self.corr_threshold) is not float or abs(self.corr_threshold) > 1:
+            self.corr_threshold = 0.7
+            print('\nInserted value of threshold for correlation was invalid. Baseline value (0.7) was used instead.')
         
         # A list containing all the different alleles in the dataset. 
         self.alleles = df.columns[2:]
@@ -189,6 +201,40 @@ class DataVisualization:
              np.any(np.isfinite(correlation_data))):# Verifying whether there are correlation values at all.
                                                     #isfinite() checks for valid numeric values (excluding NaN or Inf).
             
+            """
+            Printing to the user the alleles who have a significant correlation 
+            between one another in the formation of the tumor:
+            """
+
+            # Create a copy of the correlation matrix
+            corr_lower = correlation_data.copy()
+
+            # Apply a mask to keep only the lower triangle and remove the diagonal.
+            corr_lower.values[np.triu_indices_from(corr_lower)] = np.nan
+
+            # Extract components with correlation >= 0.4.
+            significant_pairs = corr_lower[abs(corr_lower) >= self.corr_threshold].stack().index.tolist()
+
+            # Get unique component names.
+            list_corr = list(set([item for sublist in significant_pairs for item in sublist]))
+            
+            if len(list_corr) > 0 and tumor_type != 'normal':
+                print(f"\nMost significant alleles that are highly correlated in the formation of {tumor_type}:\n")
+
+                for allele in list_corr:
+                    print(f"{allele} - Changed expression from normal by: {round((tumor_allele_data[allele] / self.normal_means[allele])*100, 3)}%")
+            
+            elif tumor_type == 'normal':
+                pass
+            
+            else:
+                print("\nAlthough some alleles were found to be expressed significantly more or less compared to control,")
+                print(f"no set of alleles were found to have a significantly correlated expression pattern in {tumor_type}.")
+
+
+
+                 # Plotting the full (unfiltered) correlation results. 
+
             plt.figure(figsize=(8, 6))
             sns.heatmap(correlation_data, annot=True, cmap='coolwarm', center=0) # Plot heatmap.
             plt.title(f"Allele Correlation Heatmap - {tumor_type}") # Set heatmap title.
@@ -198,3 +244,4 @@ class DataVisualization:
             print(f'\nNot enough data in excel file to show correlation between alleles in {tumor_type}.')
         
         plt.show()
+        os.system('cls') # Clears the terminal. 

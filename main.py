@@ -1,6 +1,6 @@
 #main.py: Entry point for the project
 
-from src.data_extraction import import_data, clean_data, print_data  # noqa: I001
+from src.data_extraction import import_data, clean_data, print_data  
 from src.data_visualization import DataVisualization
 
 
@@ -19,6 +19,8 @@ def main():
     # The number of top alleles that we allow to be plotted for each tumor.
     num_for_plot = 5 # Can only be a natural number.
 
+    # Threshold for identifying significant correlations. 
+    corr_threshold = 0.7
 
 
                     # Running The Code:
@@ -32,7 +34,7 @@ def main():
     # print_data(data) # Optional.  
 
     # Visualising data of the excel using user interface.
-    DataVisualization(data, df, num_for_plot)
+    DataVisualization(data, df)
 
 
 if __name__ == "__main__":
