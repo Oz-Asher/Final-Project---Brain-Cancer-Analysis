@@ -2,7 +2,6 @@ from scipy.stats import f_oneway
 import pandas as pd
 import os
 import numpy as np
-import sys
 
 """
 This code extract data from a CSV file (named csv_name) and  
@@ -67,7 +66,7 @@ def clean_data(df, critical_alpha = 0.01):
 
     if df.empty: # If excel file is empty. 
         print('\nCSV file is empty. Please add info.')
-        sys.exit()
+        return 
 
     if type(critical_alpha) is not float or (critical_alpha >= 1 or critical_alpha <= 0): # In case critical alpha is not valid. 
         critical_alpha = 0.01

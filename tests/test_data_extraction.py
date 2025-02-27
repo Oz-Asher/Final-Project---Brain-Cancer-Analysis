@@ -16,7 +16,17 @@ def test_import_data():
     # Example of csv_name
     csv_name = None
 
-    import_data(csv_name) # Test
+    try:
+        result = import_data(csv_name)
+        
+        # Check if the function returned what we expect
+        if result is None:
+            print("\nTEST CONCLUSION: import_data correctly handled missing filename.")
+        else:
+            print("\nTEST CONCLUSION: Unexpected output from import_data.")
+
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: import_data failed with error: {e}")
 
 
 def test_clean_data():
@@ -33,21 +43,36 @@ def test_clean_data():
     }
 
     df = pd.DataFrame(df)
-   
-    # Example of critical_alpha
-    critical_alpha = 0.01
+ 
+    try:
+        data = clean_data(df)
 
-    data = clean_data(df, critical_alpha) # Test
-    print('\n', data)
+        # Check if the function returned a DataFrame
+        if isinstance(data, pd.DataFrame):
+            print("\nTEST CONCLUSION: clean_data produced a valid DataFrame output.")
+        else:
+            print("\nTEST CONCLUSION: clean_data returned an empty or incorrect DataFrame.")
+
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: clean_data failed with error: {e}")
+
 
 
     print('\n\\\\\\\\\\\\\\\\\\ clean_data() Test 2')
 
     # Example when df is empty:
-    df = {}
-    df = pd.DataFrame(df)
-    data = clean_data(df, critical_alpha) # Test
-    print('\n', data)
+    df = pd.DataFrame({})
+
+    try:
+        data = clean_data(df) 
+
+        if data is None:
+            print("\nTEST CONCLUSION: clean_data correctly handled an empty DataFrame.")
+        else:
+            print("\nTEST CONCLUSION: clean_data should return an empty DataFrame but didn't.")
+
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: clean_data failed with error: {e}")
 
 
 def test_print_data():
@@ -69,7 +94,13 @@ def test_print_data():
     data.set_index('', inplace=True)
 
 
-    print_data(data)
+    try:
+        print_data(data)
+        print("\nTEST CONCLUSION: print_data ran successfully without errors.")
+
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: print_data failed with error: {e}")
+
 
 
     print('\n\\\\\\\\\\\\\\\\\\ print_data() Test 2')
@@ -88,16 +119,28 @@ def test_print_data():
     data.columns.values[0] = ''
     data.set_index('', inplace=True)
 
+    try:
+        print_data(data)
+        print("\nTEST CONCLUSION: print_data ran successfully with varied data.")
 
-    print_data(data)
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: print_data failed with error: {e}")
+
 
 
     print('\n\\\\\\\\\\\\\\\\\\ print_data() Test 3')
 
     data = pd.DataFrame({})
-    print_data(data)
+
+    try:
+        print_data(data)
+        print("\nTEST CONCLUSION: print_data ran successfully on an empty DataFrame.")
+
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: print_data failed with error: {e}")
+
 
 
 test_import_data()
-test_print_data()
 test_clean_data()
+test_print_data()

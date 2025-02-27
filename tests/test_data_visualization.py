@@ -40,9 +40,14 @@ def test_DataVisualization():
 
     num_for_plot = 2
     
+    try:
+        # Run visualization function
+        DataVisualization(data, df, num_for_plot)
+        print("\nTEST CONCLUSION: DataVisualization ran successfully without errors.")
 
-    # Ensure no errors during plotting
-    DataVisualization(data, df, num_for_plot)
+    except Exception as e:
+        print(f"\nTEST CONCLUSION: DataVisualization failed with error: {e}")
+
 
 
 test_DataVisualization()

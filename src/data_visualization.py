@@ -1,6 +1,5 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-import sys
 import os
 import numpy as np
 import random
@@ -53,7 +52,10 @@ class DataVisualization:
         # Contains the mean expression (in values) for each allele (in keys) in the healthy tissue.
         self.normal_means = df[df['type'] == 'normal'][self.alleles].mean().to_dict() # Converts the variable into a dict.
 
-        self.user_interface() # Run the interface with the user.
+        try:
+            self.user_interface() # Run the interface with the user.
+        except StopIteration:
+            pass
 
 
     def user_interface(self):
@@ -82,7 +84,7 @@ class DataVisualization:
 
             elif allele_or_tumor == 'exit': # If the user wants to end the program. 
                 os.system('cls') # Clears the terminal. 
-                sys.exit() # Exit the program. 
+                raise StopIteration()  # Exit the program. 
 
             else: # If the user types something unfamiliar to the program.
                 print("\nInvalid choice. Please try again.")
@@ -212,7 +214,7 @@ class DataVisualization:
             # Apply a mask to keep only the lower triangle and remove the diagonal.
             corr_lower.values[np.triu_indices_from(corr_lower)] = np.nan
 
-            # Extract components with correlation >= 0.4.
+            # Extract components with correlation >= corr_threshold.
             significant_pairs = corr_lower[abs(corr_lower) >= self.corr_threshold].stack().index.tolist()
 
             # Get unique component names.
